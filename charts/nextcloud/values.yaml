@@ -23,7 +23,7 @@ replicaCount: 1
 ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ##
 ingress:
-  enabled: false
+  enabled: true
   # className: nginx
   annotations: {}
   #  nginx.ingress.kubernetes.io/proxy-body-size: 4G
@@ -74,9 +74,9 @@ phpClientHttpsFix:
   protocol: https
 
 nextcloud:
-  host: nextcloud.kube.home
+  host: nc.stratocloud.eu
   username: admin
-  password: changeme
+  password: changeme123
   ## Use an existing secret
   existingSecret:
     enabled: false
@@ -530,7 +530,7 @@ service:
 ##
 persistence:
   # Nextcloud Data (/var/www/html)
-  enabled: false
+  enabled: true
   annotations: {}
   ## nextcloud data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
@@ -539,7 +539,7 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  # storageClass: "-"
+  storageClass: "local-path"
 
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true
@@ -547,7 +547,7 @@ persistence:
   # existingClaim:
 
   accessMode: ReadWriteOnce
-  size: 8Gi
+  size: 10Gi
 
   ## Use an additional pvc for the data directory rather than a subpath of the default PVC
   ## Useful to store data on a different storageClass (e.g. on slower disks)
