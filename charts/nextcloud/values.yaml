@@ -437,7 +437,7 @@ mariadb:
       existingClaim: ""
       storageClass: ""
       accessMode: ReadWriteOnce
-      size: 8Gi
+      size: 5Gi
 
 ##
 ## PostgreSQL chart configuration
@@ -538,15 +538,15 @@ persistence:
   ## If undefined (the default) or set to null, no storageClassName spec is
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
-  ##
-  storageClass: "local-path"
+  ## local-path or nfs-client
+  storageClass: "nfs-client"
 
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
   # existingClaim:
 
-  accessMode: ReadWriteOnce
+  accessMode: ReadWriteMany
   size: 10Gi
 
   ## Use an additional pvc for the data directory rather than a subpath of the default PVC
@@ -577,14 +577,14 @@ resources: {}
 ##
 livenessProbe:
   enabled: true
-  initialDelaySeconds: 15
+  initialDelaySeconds: 2000
   periodSeconds: 15
   timeoutSeconds: 5
   failureThreshold: 5
   successThreshold: 1
 readinessProbe:
   enabled: true
-  initialDelaySeconds: 15
+  initialDelaySeconds: 2000
   periodSeconds: 15
   timeoutSeconds: 5
   failureThreshold: 5
@@ -602,10 +602,10 @@ startupProbe:
 ## ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 ##
 hpa:
-  enabled: false
+  enabled: true
   cputhreshold: 60
   minPods: 1
-  maxPods: 10
+  maxPods: 5
 
 nodeSelector: {}
 
