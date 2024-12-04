@@ -577,14 +577,14 @@ resources: {}
 ##
 livenessProbe:
   enabled: true
-  initialDelaySeconds: 2000
+  initialDelaySeconds: 20
   periodSeconds: 15
   timeoutSeconds: 5
   failureThreshold: 5
   successThreshold: 1
 readinessProbe:
   enabled: true
-  initialDelaySeconds: 2000
+  initialDelaySeconds: 20
   periodSeconds: 15
   timeoutSeconds: 5
   failureThreshold: 5
