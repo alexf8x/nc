@@ -539,14 +539,14 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ## local-path or nfs-client
-  storageClass: "nfs-client"
+  storageClass: "local-path"
 
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
   # existingClaim:
 
-  accessMode: ReadWriteMany
+  accessMode: ReadWriteOnce
   size: 10Gi
 
   ## Use an additional pvc for the data directory rather than a subpath of the default PVC
