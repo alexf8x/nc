@@ -416,7 +416,7 @@ mariadb:
   # see: https://github.com/bitnami/charts/tree/main/bitnami/mariadb#global-parameters
   global:
     # overwrites the primary.persistence.storageClass value
-    defaultStorageClass: "local-path"
+    defaultStorageClass: "nfs-client"
 
   auth:
     database: nextcloud
@@ -437,7 +437,7 @@ mariadb:
       # Use an existing Persistent Volume Claim (must be created ahead of time)
       existingClaim: ""
       storageClass: ""
-      accessMode: ReadWriteOnce
+      accessMode: ReadWriteMany
       size: 5Gi
 
 ##
@@ -540,14 +540,14 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ## local-path or nfs-client
-  storageClass: "local-path"
+  storageClass: "nfs-client"
 
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
   # existingClaim:
 
-  accessMode: ReadWriteOnce
+  accessMode: ReadWriteMany
   size: 10Gi
 
   ## Use an additional pvc for the data directory rather than a subpath of the default PVC
@@ -561,31 +561,31 @@ persistence:
     accessMode: ReadWriteOnce
     size: 8Gi
 
-resources: {}
+resources: {
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
-
+   limits:
+    cpu: 100m
+    memory: 256Mi
+   requests:
+    cpu: 100m
+    memory: 256Mi
+            }
 ## Liveness and readiness probe values
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
 livenessProbe:
   enabled: true
-  initialDelaySeconds: 20
+  initialDelaySeconds: 3000
   periodSeconds: 15
   timeoutSeconds: 5
   failureThreshold: 5
   successThreshold: 1
 readinessProbe:
   enabled: true
-  initialDelaySeconds: 20
+  initialDelaySeconds: 3000
   periodSeconds: 15
   timeoutSeconds: 5
   failureThreshold: 5
@@ -605,8 +605,8 @@ startupProbe:
 hpa:
   enabled: true
   cputhreshold: 60
-  minPods: 1
-  maxPods: 5
+  minPods: 2
+  maxPods: 4
 
 nodeSelector: {}
 
