@@ -17,7 +17,7 @@ deploymentAnnotations: {}
 deploymentLabels: {}
 
 # Number of replicas to be deployed
-replicaCount: 1
+#replicaCount: 1
 
 ## Allowing use of ingress controllers
 ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
@@ -605,7 +605,7 @@ startupProbe:
 hpa:
   enabled: true
   cputhreshold: 60
-  minPods: 1
+  minPods: 2
   maxPods: 4
 
 nodeSelector: {}
