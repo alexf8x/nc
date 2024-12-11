@@ -605,7 +605,7 @@ startupProbe:
 hpa:
   enabled: true
   cputhreshold: 60
-  minPods: 2
+  minPods: 1
   maxPods: 4
 
 nodeSelector: {}
